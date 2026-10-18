@@ -1,0 +1,44 @@
+# Orochi AdBlock
+
+自用 Chrome 广告拦截插件（Manifest V3），基于浏览器官方的
+`declarativeNetRequest` 接口执行拦截，规则来自：
+
+- **EasyList**（全球广告规则，约 5.8 万条网络规则）
+- **EasyList China**（中文站点补充，约 1.1 万条）
+- **EasyPrivacy**（反追踪，约 1.5 万条）
+
+另带一份通用元素隐藏（cosmetic.js），抹掉常见广告容器。
+
+## 安装（开发者模式）
+
+1. 下载本仓库并解压（或 `git clone`）
+2. 如果 `rules/` 目录里没有 JSON，先生成规则（见下）
+3. Chrome 打开 `chrome://extensions`，开启右上角「开发者模式」
+4. 点「加载已解压的扩展程序」，选择本仓库根目录
+5. 工具栏出现 Orochi AdBlock 图标即安装成功；图标徽标显示本页拦截数，
+   点开弹窗可查看数量并一键暂停/恢复
+
+## 生成规则
+
+规则 JSON 由 `tools/convert.py` 从官方过滤列表转换得到（生成物不入库）：
+
+```sh
+curl -sL -o /tmp/easylist.txt       https://easylist.to/easylist/easylist.txt
+curl -sL -o /tmp/easylistchina.txt  https://raw.githubusercontent.com/easylist/easylistchina/master/easylistchina.txt
+curl -sL -o /tmp/easyprivacy.txt    https://easylist.to/easylist/easyprivacy.txt
+python3 tools/convert.py /tmp/easylist.txt       rules/easylist.json
+python3 tools/convert.py /tmp/easylistchina.txt  rules/easylistchina.json
+python3 tools/convert.py /tmp/easyprivacy.txt    rules/easyprivacy.json
+```
+
+更新规则 = 重跑一遍上面的命令，然后在 `chrome://extensions` 里点插件的刷新按钮。
+
+## 已知边界
+
+- YouTube 等「广告与正片同域名」的站点，规则拦截效果有限（所有同类插件通病）
+- 部分网站会检测拦截器并弹窗提示关闭，属猫鼠游戏，后续版本再适配
+- 拦截计数依赖 `onRuleMatchedDebug`，仅在开发者模式加载时可用
+
+## 版本
+
+- v0.1.0 — MVP：网络请求拦截 + 通用元素隐藏 + 弹窗计数与总开关
