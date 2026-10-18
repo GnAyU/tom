@@ -41,4 +41,5 @@ python3 tools/convert.py /tmp/easyprivacy.txt    rules/easyprivacy.json
 
 ## 版本
 
+- v0.2.0 — 新增站点暂停/恢复（白名单持久保存，网络放行并跳过元素隐藏）；弹窗在本页计数旁显示持久保存的累计拦截数。站点设置修改后请刷新页面以应用元素隐藏设置；累计计数同样依赖开发者模式的 `onRuleMatchedDebug`，全局开关保持不变。
 - v0.1.0 — MVP：网络请求拦截 + 通用元素隐藏 + 弹窗计数与总开关

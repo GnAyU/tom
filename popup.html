@@ -25,13 +25,24 @@
     input:checked + .track { background: #1a73e8; }
     input:checked + .track:before { transform: translateX(18px); }
     .state { font-size: 13px; }
+    .stats { display: flex; gap: 24px; }
+    #siteToggle { width: 100%; margin-top: 14px; padding: 8px; cursor: pointer; }
+    #siteHint { margin: 6px 0 0; font-size: 12px; color: #5f6368; }
   </style>
 </head>
 <body>
   <h1>Orochi AdBlock</h1>
   <div class="sub">EasyList · EasyList China · EasyPrivacy</div>
-  <div class="count" id="count">–</div>
-  <div class="count-label">本页已拦截的请求数</div>
+  <div class="stats">
+    <div>
+      <div class="count" id="count">–</div>
+      <div class="count-label">本页已拦截</div>
+    </div>
+    <div>
+      <div class="count" id="totalBlocked">–</div>
+      <div class="count-label">累计已拦截</div>
+    </div>
+  </div>
   <div class="row">
     <span class="state" id="stateText">拦截中</span>
     <label class="switch">
@@ -39,6 +50,8 @@
       <span class="track"></span>
     </label>
   </div>
+  <button id="siteToggle" type="button" disabled>暂停此站点拦截</button>
+  <p id="siteHint" role="status">刷新页面后元素隐藏设置生效</p>
   <script src="popup.js"></script>
 </body>
 </html>

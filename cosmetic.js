@@ -1,7 +1,10 @@
 // Orochi AdBlock — generic cosmetic filtering.
 // Hides common ad containers with a small, curated selector list
 // (generic EasyList-style hides that are safe across most sites).
-(function () {
+(async function () {
+  const { whitelist } = await chrome.storage.local.get({ whitelist: [] });
+  if (whitelist.includes(location.hostname)) return;
+
   const SELECTORS = [
     '[id^="ad-"]', '[id^="ads-"]', '[id^="google_ads"]',
     '[class^="ad-"]', '[class*=" ad-"]', '[class*="-ad-"]',
