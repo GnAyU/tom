@@ -1,5 +1,10 @@
 // Orochi AdBlock — popup logic; all state changes go through the service worker.
 (async function () {
+  document.getElementById("options").addEventListener("click", () => {
+    chrome.runtime.openOptionsPage().catch((error) => {
+      document.getElementById("siteHint").textContent = error.message;
+    });
+  });
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   const countEl = document.getElementById("count");
   const totalEl = document.getElementById("totalBlocked");

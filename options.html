@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>设置 — Orochi AdBlock</title>
+  <style>
+    body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      max-width: 760px; margin: 32px auto; padding: 0 20px; color: #202124; background: #f8f9fa; }
+    h1 { font-size: 24px; } h2 { font-size: 18px; margin-top: 0; }
+    section { margin: 18px 0; padding: 20px; background: white; border: 1px solid #dadce0; border-radius: 8px; }
+    p, .hint { color: #5f6368; font-size: 14px; line-height: 1.6; }
+    ul { list-style: none; padding: 0; }
+    li { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin: 8px 0; overflow-wrap: anywhere; }
+    button, input, textarea { font: inherit; } button { cursor: pointer; padding: 6px 12px; }
+    input[type="text"] { min-width: 0; flex: 1; padding: 8px; }
+    form .row { display: flex; gap: 8px; margin-top: 8px; }
+    #rulesets label { display: block; margin: 12px 0; }
+    textarea { box-sizing: border-box; width: 100%; margin: 8px 0; padding: 10px; font-family: monospace; }
+    #status { position: sticky; top: 0; background: #f8f9fa; padding: 10px 0; min-height: 22px; }
+    #status[data-error="true"] { color: #b3261e; }
+  </style>
+</head>
+<body>
+  <h1>Orochi AdBlock 设置</h1>
+  <p>v1.0.0 · 所有设置仅保存在本机。全局开关在工具栏弹窗中。</p>
+  <div id="status" role="status" aria-live="polite">正在读取设置…</div>
+  <main id="settings" inert>
+    <section>
+      <h2>已暂停站点（白名单）</h2>
+      <p>与弹窗共用白名单；移除后恢复该站点的网络拦截和元素隐藏。</p>
+      <ul id="whitelist"></ul>
+    </section>
+    <section>
+      <h2>静态规则集</h2>
+      <p id="rulesetHint"></p>
+      <div id="rulesets">
+        <label><input type="checkbox" data-ruleset="easylist"> EasyList（全球广告）</label>
+        <label><input type="checkbox" data-ruleset="easylistchina"> EasyList China（中文站点）</label>
+        <label><input type="checkbox" data-ruleset="easyprivacy"> EasyPrivacy（反追踪）</label>
+      </div>
+    </section>
+    <section>
+      <h2>自定义拦截域名</h2>
+      <p>输入纯域名（例如 ads.example.com），拦截该域名及其子域名。本站暂停优先于域名拦截。</p>
+      <form id="domainForm">
+        <label for="domain">要拦截的域名</label>
+        <div class="row"><input id="domain" type="text" required placeholder="ads.example.com" autocomplete="off">
+          <button type="submit">添加</button></div>
+      </form>
+      <ul id="domains"></ul>
+    </section>
+    <section>
+      <h2>自定义隐藏选择器</h2>
+      <form id="selectorForm">
+        <label for="selectors">CSS 选择器，每行一条；删除相应行后保存即可移除。</label>
+        <textarea id="selectors" rows="8" spellcheck="false" placeholder=".sponsored-banner&#10;#custom-ad"></textarea>
+        <button type="submit">保存选择器</button>
+      </form>
+      <p>全局应用于普通网页，已暂停站点除外。保存后已打开的页面也会更新；新增元素同样受 CSS 隐藏。</p>
+    </section>
+  </main>
+  <script src="rules.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
